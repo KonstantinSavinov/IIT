@@ -1,0 +1,1002 @@
+#: import FadeTransition kivy.uix.screenmanager.FadeTransition
+#:import Button kivy.uix.button.Button
+
+#kivy.require("1.10.0")
+
+ScreenManagement:
+    transition: FadeTransition()
+    LoginP:
+    MainMenu:
+    Edit:
+    PayRoll:
+    EmployeeCheck:
+    AddPage:
+
+<TestWidget@GridLayout>:
+    pos: 100, 100
+    size: 100, 100
+    cols: 3
+    rows: 3
+    on_parent:
+        if not self.children: [self.add_widget(Button(text=str(i))) for i in range(1, 10)]
+
+
+<LoginP>:
+    name: "log"
+    canvas:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'background.png'
+
+    BoxLayout:
+        orientation: "vertical"
+        size_hint: 0.2, 0.4
+        pos_hint: {"x": 0.37, "y": 0.43}
+        canvas:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'logo.png'
+
+
+    BoxLayout:
+        id: login_layout
+        orientation: 'vertical'
+
+        padding: [10]
+        spacing: 10
+        size_hint: 0.3, 0.2
+        pos_hint: {'x': .33 ,'y': .2}
+        TextInput:
+            id: login
+            write_tab: False
+            multiline: False
+            on_text_validate: root.foo()
+            hint_text: "Username"
+            font_size: 28
+
+
+        TextInput:
+            id: password
+            password:True
+            write_tab: False
+            multiline: False
+            on_text_validate: root.foo()
+            hint_text: "Password"
+            font_size: 28
+
+        Button:
+            on_release: root.check_attempt()
+            text: "Login"
+            font_name: 'Arial'
+            font_size: 28
+
+
+<MainMenu>:
+    name: "main"
+    canvas:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'background.png'
+    AnchorLayout:
+        padding: 50, 50, 50, 50
+        anchor_x: "center"
+        anchor_y: "center"
+        BoxLayout:
+            padding: 50, 50, 50, 50
+            orientation: "horizontal"
+            spacing: 50
+            canvas:
+                Color:
+                    rgba: .85, .87, .87, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+
+            BoxLayout:
+                orientation: "vertical"
+                padding: 0, 0, 0, 0
+
+                BoxLayout:
+                    orientation: "horizontal"
+                    size_hint_y: .08
+
+                    Button:
+                        size_hint: .2, 1
+                        font_size: 26
+                        text: "Logout"
+                        on_release: app.root.current = "log"
+                        background_normal: ''
+                        background_color: 1, 1, 1, 1
+                        color: 0, 0, 0, 1
+
+                    Button:
+                        font_size: 26
+                        text: "Edit"
+                        disabled: True
+                        background_normal: ''
+                        background_color: .85, .87, .87, 0
+                        color: .85, .87, .87, 0
+
+                    Label:
+                        size_hint: .2, 1
+                        font_size: 26
+                        text: "Search:"
+                        color: 0, 0, 0, 1
+
+                    TextInput:
+                        size_hint_x: .5
+                        background_normal: ''
+                        background_color: (1,1,1,1)
+                        border: 0, 0, 0, 0
+                        id: search
+                        write_tab: False
+                        multiline: False
+                        on_text_validate: root.foo()
+                        font_size: 26
+
+                Button:
+                    size_hint: 1, 0.05
+                    font_size: 26
+                    text: "Edit"
+                    disabled: True
+                    background_normal: ''
+                    background_color: .85, .87, .87, 0
+                    color: .85, .87, .87, 0
+
+                GridLayout:
+                    size_hint: 1, None
+                    height: 55
+                    cols: 3
+
+
+                    Label:
+                        text: "ID"
+                        font_size: 20
+                        color: 0, 0, 0, 1
+                        canvas.before:
+                            Color:
+                                rgba: (1, 1, 1, 1)
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                    Label:
+                        text: "Last Name"
+                        font_size: 20
+                        color: 0, 0, 0, 1
+                        canvas.before:
+                            Color:
+                                rgba: (1, 1, 1, 1)
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                    Label:
+                        text: "First Name"
+                        font_size: 20
+                        color: 0, 0, 0, 1
+                        canvas.before:
+                            Color:
+                                rgba: (1, 1, 1, 1)
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+
+                ScrollView:
+                    BoxLayout:
+                        orientation: "vertical"
+                        RecycleView:
+                            viewclass: 'SelectableButton'
+                            data: [{'text': str(x)} for x in root.data_items]
+                            SelectableRecycleGridLayout:
+                                cols: 3
+                                default_size: None, 95
+                                default_size_hint: 1, None
+                                size_hint_y: None
+                                height: self.minimum_height
+                                orientation: 'vertical'
+                                multiselect: True
+                                touch_multiselect: True
+
+
+            BoxLayout:
+                orientation: "vertical"
+                size_hint: 0.25, 1
+                spacing: 30
+
+
+                Button:
+                    size_hint_y: .2
+                    font_size: 26
+                    text: "Add Employee"
+                    on_release: app.root.current = "addpage"
+                    background_normal: ''
+                    background_color: 1, 1, 1, 1
+                    color: 0, 0, 0, 1
+
+                Button:
+                    id: 'edit_id'
+                    font_size: 26
+                    text: "just space"
+                    disabled: True
+                    background_normal: ''
+                    background_color: .85, .87, .87, 0
+                    color: .85, .87, .87, 0
+
+                Button:
+                    id: 'edit_id'
+                    size_hint_y: .2
+                    font_size: 26
+                    text: "Edit"
+                    on_release: app.root.current = "edit"
+
+                    disabled: True
+                    background_normal: ''
+                    background_color: 78, 79, 79, 1
+                    color: 0, 0, 0, 1
+
+                Button:
+                    id: 'remove_id'
+                    size_hint_y: .2
+                    font_size: 26
+                    text: "Remove"
+                    on_release: app.root.current = "addpage"
+
+                    disabled: True
+                    background_normal: ''
+                    background_color: 78, 79, 79, 1
+                    color: 0, 0, 0, 1
+
+                Button:
+                    id: 'payrol_id'
+                    size_hint_y: .2
+                    font_size: 26
+                    text: "Pay Roll"
+                    on_release: app.root.current = "payroll"
+
+                    disabled: True
+                    background_normal: ''
+                    background_color: 78, 79, 79, 1
+                    color: 0, 0, 0, 1
+
+
+
+
+
+<PayRoll>:
+    name: "payroll"
+    canvas:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'background.png'
+
+    FloatLayout:
+        BoxLayout:
+            orientation: "vertical"
+            pos_hint: {'center': (.55, .5)}
+            BoxLayout:
+                size_hint: 0.9, 0.85
+                padding: 50, 50, 50, 50
+                spacing: 50
+                BoxLayout:
+                    orientation: "horizontal"
+                    padding: 10
+                    canvas.before:
+                        Color:
+                            rgba: 1, 1, 1, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                    BoxLayout:
+                        orientation: "vertical"
+                        spacing: 2
+                        size_hint: 0.45, 0.87
+                        pos_hint: {"y": 0.05}
+                        Label:
+                            text: "ID:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "Last Name:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "First Name:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "Address Street:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "Address City:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "Address State:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "Address Zip:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "Birth Month:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "Birth Day:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "Birth Year:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "Health Care:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "Married:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "Hire Month:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "Hire Day:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "Hire Year:"
+                            color: 0,0,0,1
+
+                    BoxLayout:
+                        orientation: "vertical"
+                        spacing: 2
+                        size_hint: 0.45, 0.87
+                        pos_hint: {"y": 0.05}
+                        Label:
+                            id: employeeid
+                            text: root.col_data[0]
+                            color: 0,0,0,1
+                        Label:
+                            text: root.col_data[1]
+                            color: 0,0,0,1
+                        Label:
+                            text: root.col_data[2]
+                            color: 0,0,0,1
+                        Label:
+                            text: root.data_list[2]
+                            color: 0,0,0,1
+                        Label:
+                            text: root.data_list[3]
+                            color: 0,0,0,1
+                        Label:
+                            text: root.data_list[4]
+                            color: 0,0,0,1
+                        Label:
+                            text: root.data_list[5]
+                            color: 0,0,0,1
+                        Label:
+                            text: root.data_list[6]
+                            color: 0,0,0,1
+                        Label:
+                            text: root.data_list[7]
+                            color: 0,0,0,1
+                        Label:
+                            text: root.data_list[8]
+                            color: 0,0,0,1
+                        Label:
+                            text: root.data_list[9]
+                            color: 0,0,0,1
+                        Label:
+                            text: root.data_list[11]
+                            color: 0,0,0,1
+                        Label:
+                            text: root.data_list[12]
+                            color: 0,0,0,1
+                        Label:
+                            text: root.data_list[13]
+                            color: 0,0,0,1
+                        Label:
+                            text: root.data_list[14]
+                            color: 0,0,0,1
+
+                BoxLayout:
+                    orientation: "horizontal"
+                    padding: 10
+                    canvas.before:
+                        Color:
+                            rgba: 1, 1, 1, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                    BoxLayout:
+                        orientation: "vertical"
+                        spacing: 30
+                        size_hint: 0.45, 0.87
+                        pos_hint: {"y": 0.05}
+                        Label:
+                            text: "kParticipate:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "kContribution:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "pension Participate:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "pension Contribution:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "union Participate:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "pay Type:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "pay Amount:"
+                            color: 0,0,0,1
+
+                    BoxLayout:
+                        orientation: "vertical"
+                        spacing: 30
+                        size_hint: 0.45, 0.87
+                        pos_hint: {"y": 0.05}
+                        Label:
+                            text: root.data_list[16]
+                            color: 0,0,0,1
+                        Label:
+                            text: root.data_list[17]
+                            color: 0,0,0,1
+                        Label:
+                            text: root.data_list[18]
+                            color: 0,0,0,1
+                        Label:
+                            text: root.data_list[19]
+                            color: 0,0,0,1
+                        Label:
+                            text: root.data_list[20]
+                            color: 0,0,0,1
+                        Label:
+                            text: root.data_list[21]
+                            color: 0,0,0,1
+                        Label:
+                            text: root.data_list[22]
+                            color: 0,0,0,1
+                BoxLayout:
+                    orientation: "horizontal"
+                    padding: 10
+                    canvas.before:
+                        Color:
+                            rgba: 1, 1, 1, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                    BoxLayout:
+                        orientation: "vertical"
+                        spacing: 100
+                        size_hint: 0.45, 0.87
+                        pos_hint: {"y": 0.05}
+                        Label:
+                            text: "healthcare Insurance:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "dental Insurance:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "optical Insurance:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "healthTier:"
+                            color: 0,0,0,1
+
+                    BoxLayout:
+                        orientation: "vertical"
+                        spacing: 100
+                        size_hint: 0.45, 0.87
+                        pos_hint: {"y": 0.05}
+                        Label:
+                            text: root.data_list[24]
+                            color: 0,0,0,1
+                        Label:
+                            text: root.data_list[25]
+                            color: 0,0,0,1
+                        Label:
+                            text: root.data_list[26]
+                            color: 0,0,0,1
+                        Label:
+                            text: root.data_list[27]
+                            color: 0,0,0,1
+
+            BoxLayout:
+                orientation: "horizontal"
+                padding: 10
+                spacing: 10
+                size_hint: 0.3, 0.1
+                pos_hint: {"x": 0.3}
+                Button:
+                    on_release: app.root.current = "main"
+                    text: "Close"
+                Button:
+                    on_release: root.execute()
+                    text: "Calculating a check"
+
+
+
+
+
+<Edit>:
+    name: "edit"
+    canvas:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'background.png'
+
+    FloatLayout:
+        BoxLayout:
+            orientation: "vertical"
+            pos_hint: {'center': (.55, .5)}
+            BoxLayout:
+                size_hint: 0.9, 0.85
+                padding: 50, 50, 50, 50
+                spacing: 50
+                BoxLayout:
+                    orientation: "horizontal"
+                    padding: 10
+                    canvas.before:
+                        Color:
+                            rgba: 1, 1, 1, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                    BoxLayout:
+                        orientation: "vertical"
+                        spacing: 2
+                        size_hint: 0.45, 0.87
+                        pos_hint: {"y": 0.05}
+                        Label:
+                            text: "ID:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "Last Name:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "First Name:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "Address Street:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "Address City:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "Address State:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "Address Zip:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "Birth Month:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "Birth Day:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "Birth Year:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "Health Care:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "Married:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "Hire Month:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "Hire Day:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "Hire Year:"
+                            color: 0,0,0,1
+
+                    BoxLayout:
+                        orientation: "vertical"
+                        spacing: 2
+                        size_hint: 0.45, 0.87
+                        pos_hint: {"y": 0.05}
+                        Label:
+                            id: employeeid
+                            text: root.col_data[0]
+                            color: 0,0,0,1
+                        Label:
+                            text: root.col_data[1]
+                            color: 0,0,0,1
+                        Label:
+                            text: root.col_data[2]
+                            color: 0,0,0,1
+                        TextInput:
+                            id: address
+                            text: root.data_list[2]
+                            multiline: False
+                        TextInput:
+                            id: addresscity
+                            text: root.data_list[3]
+                            multiline: False
+                        TextInput:
+                            id: addressstate
+                            text: root.data_list[4]
+                            multiline: False
+                        TextInput:
+                            id: addresszip
+                            text: root.data_list[5]
+                            multiline: False
+                        TextInput:
+                            id: mob
+                            text: root.data_list[6]
+                            multiline: False
+                        TextInput:
+                            id: dob
+                            text: root.data_list[7]
+                            multiline: False
+                        TextInput:
+                            id: yob
+                            text: root.data_list[8]
+                            multiline: False
+                        TextInput:
+                            id: healthCare
+                            text: root.data_list[9]
+                            multiline: False
+                        TextInput:
+                            id: married
+                            text: root.data_list[11]
+                            multiline: False
+                        TextInput:
+                            id: hireMonth
+                            text: root.data_list[12]
+                            multiline: False
+                        TextInput:
+                            id: hireDay
+                            text: root.data_list[13]
+                            multiline: False
+                        TextInput:
+                            id: hireYear
+                            text: root.data_list[14]
+                            multiline: False
+
+                BoxLayout:
+                    orientation: "horizontal"
+                    padding: 10
+                    canvas.before:
+                        Color:
+                            rgba: 1, 1, 1, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                    BoxLayout:
+                        orientation: "vertical"
+                        spacing: 30
+                        size_hint: 0.45, 0.87
+                        pos_hint: {"y": 0.05}
+                        Label:
+                            text: "kParticipate:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "kContribution:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "pension Participate:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "pension Contribution:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "union Participate:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "pay Type:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "pay Amount:"
+                            color: 0,0,0,1
+
+                    BoxLayout:
+                        orientation: "vertical"
+                        spacing: 30
+                        size_hint: 0.45, 0.87
+                        pos_hint: {"y": 0.05}
+                        TextInput:
+                            id: kParticipate
+                            text: root.data_list[16]
+                            multiline: False
+                        TextInput:
+                            id: kContribution
+                            text: root.data_list[17]
+                            multiline: False
+                        TextInput:
+                            id: pensionP
+                            text: root.data_list[18]
+                            multiline: False
+                        TextInput:
+                            id: pensionC
+                            text: root.data_list[19]
+                            multiline: False
+                        TextInput:
+                            id: unionP
+                            text: root.data_list[20]
+                            multiline: False
+                        TextInput:
+                            id: payType
+                            text: root.data_list[21]
+                            multiline: False
+                        TextInput:
+                            id: payAmount
+                            text: root.data_list[22]
+                            multiline: False
+                BoxLayout:
+                    orientation: "horizontal"
+                    padding: 10
+                    canvas.before:
+                        Color:
+                            rgba: 1, 1, 1, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                    BoxLayout:
+                        orientation: "vertical"
+                        spacing: 100
+                        size_hint: 0.45, 0.87
+                        pos_hint: {"y": 0.05}
+                        Label:
+                            text: "healthcare Insurance:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "dental Insurance:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "optical Insurance:"
+                            color: 0,0,0,1
+                        Label:
+                            text: "healthTier:"
+                            color: 0,0,0,1
+
+                    BoxLayout:
+                        orientation: "vertical"
+                        spacing: 100
+                        size_hint: 0.45, 0.87
+                        pos_hint: {"y": 0.05}
+                        TextInput:
+                            id: healthcareIns
+                            text: root.data_list[24]
+                            multiline: False
+                        TextInput:
+                            id: dentalIns
+                            text: root.data_list[25]
+                            multiline: False
+                        TextInput:
+                            id: opticalIns
+                            text: root.data_list[26]
+                            multiline: False
+                        TextInput:
+                            id: healthTier
+                            text: root.data_list[27]
+                            multiline: False
+
+            BoxLayout:
+                orientation: "horizontal"
+                padding: 10
+                spacing: 10
+                size_hint: 0.3, 0.1
+                pos_hint: {"x": 0.3}
+                Button:
+                    text: "Save Changes"
+                    on_release:
+                        (root.package_changes(employeeid.text,address.text, addresscity.text, addressstate.text, addresszip.text, mob.text, dob.text, yob.text, healthCare.text, married.text, hireMonth.text, hireDay.text, hireYear.text, kParticipate.text, kContribution.text, pensionP.text, pensionC.text, unionP.text, payType.text, payAmount.text,healthcareIns.text, dentalIns.text, opticalIns.text, healthTier.text), root.on_click())
+                Button:
+                    text: "Back"
+                    on_release: app.root.current = "main"
+
+
+
+
+
+
+<SelectableButton>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+
+<EmployeeCheck>:
+    name: "employeecheck"
+    canvas:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'background.png'
+
+    BoxLayout:
+        orientation: "vertical"
+        size_hint: 0.8, 0.55
+        pos_hint: {"x": 0.12, "y": 0.3}
+        canvas:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'check.png'
+        FloatLayout:
+            BoxLayout:
+                orientation: "horizontal"
+                padding: 2
+                size_hint: 0.3, 0.87
+                pos_hint: {"center": (0.15, 0.5), "top": 0.30}
+                Label:
+                    text: root.finance_info[7]
+                    color: 0,0,0,1
+                Label:
+                    text: root.finance_info[6]
+                    color: 0,0,0,1
+
+        FloatLayout:
+            BoxLayout:
+                orientation: "horizontal"
+                spacing: 30
+                size_hint: 0.45, 0.87
+                pos_hint: {"x": 0.33, "y": 0.43}
+                Label:
+                    text: root.finance_info[5]
+                    color: 0,0,0,1
+
+        FloatLayout:
+            BoxLayout:
+                orientation: "vertical"
+                size_hint: 0.45, 0.87
+                pos_hint: {"x": 0.2, "y": 0.65}
+                Label:
+                    text: root.finance_info[8]
+                    color: 0,0,0,1
+
+        FloatLayout:
+            BoxLayout:
+                orientation: "vertical"
+                spacing: 35
+                size_hint: 0.45, 0.87
+                pos_hint: {"x": 0.7, "y": 0.85}
+                Label:
+                    text: root.finance_info[0]
+                    color: 0,0,0,1
+                Label:
+                    text: root.finance_info[1]
+                    color: 0,0,0,1
+                Label:
+                    text: root.finance_info[2]
+                    color: 0,0,0,1
+                Label:
+                    text: root.finance_info[3]
+                    color: 0,0,0,1
+
+        FloatLayout:
+            BoxLayout:
+                orientation: "horizontal"
+                padding: 20
+                size_hint: 0.45, 0.87
+                pos_hint: {"x": 0.7, "center": (0.92, 0.3)}
+                Label:
+                    text: root.finance_info[4]
+                    color: 0,0,0,1
+
+    BoxLayout:
+        orientation: "horizontal"
+        padding: 10
+        spacing: 10
+        size_hint: 0.3, 0.1
+        pos_hint: {"x": 0.35, "y": 0.15}
+        Button:
+            text: "Print"
+        Button:
+            text: "Back"
+            on_release: app.root.current = "payroll"
+
+
+
+<AddPage>
+    name: "addpage"
+    canvas:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'background.png'
+    BoxLayout:
+        orientation: "vertical"
+        size_hint: 0.25, .25
+        pos_hint: {"x": 0.75, "y": 0.4}
+        spacing: 100
+
+        Button:
+            id: "sub"
+            font_size: 26
+            text: "Submit"
+
+        Button:
+            id: "mainm"
+            font_size: 26
+            text: "Back"
+            on_release: app.root.current = "main"
+
+    BoxLayout:
+        orientation: "vertical"
+        size_hint: .5, 1
+        pos_hint:{"x": 0.25,"y": 0}
+        TextInput:
+            id: fn
+            write_tab: False
+            multiline: False
+            on_text_validate: root.foo()
+            hint_text: "First Name"
+            font_size: 20
+        TextInput:
+            id: ln
+            write_tab: False
+            multiline: False
+            on_text_validate: root.foo()
+            hint_text: "Last Name"
+            font_size: 20
+        TextInput:
+            id: streetadd
+            write_tab: False
+            multiline: False
+            on_text_validate: root.foo()
+            hint_text: "Street Address"
+            font_size: 20
+        TextInput:
+            id: cityadd
+            write_tab: False
+            multiline: False
+            on_text_validate: root.foo()
+            hint_text: "City"
+            font_size: 20
+        TextInput:
+            id: stateadd
+            write_tab: False
+            multiline: False
+            on_text_validate: root.foo()
+            hint_text: "State"
+            font_size: 20
+        TextInput:
+            id: zipadd
+            write_tab: False
+            multiline: False
+            on_text_validate: root.foo()
+            hint_text: "Zip Code"
+            font_size: 20
+        TextInput:
+            id: bm
+            write_tab: False
+            multiline: False
+            on_text_validate: root.foo()
+            hint_text: "MM"
+            font_size: 20
+        TextInput:
+            id: bd
+            write_tab: False
+            multiline: False
+            on_text_validate: root.foo()
+            hint_text: "DD"
+            font_size: 20
+        TextInput:
+            id: by
+            write_tab: False
+            multiline: False
+            on_text_validate: root.foo()
+            hint_text: "YYYY"
+            font_size: 20
+        TextInput:
+            id: healthc
+            write_tab: False
+            multiline: False
+            on_text_validate: root.foo()
+            hint_text: "HealthCare"
+            font_size: 20
+        TextInput:
+            id: marry
+            write_tab: False
+            multiline: False
+            on_text_validate: root.foo()
+            hint_text: "Married Y/N"
+            font_size: 20

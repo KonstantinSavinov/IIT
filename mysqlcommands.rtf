@@ -1,0 +1,88 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww28600\viewh18000\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 CREATE TABLE `employeeprofile` (\
+  `firstName` varchar(255) NOT NULL,\
+  `lastName` varchar(255) NOT NULL,\
+  `addressStreet` varchar(255) NOT NULL,\
+  `addressCity` varchar(255) NOT NULL,\
+  `addressState` varchar(255) NOT NULL,\
+  `addressZip` varchar(255) NOT NULL,\
+  `birthMonth` varchar(255) NOT NULL,\
+  `birthDay` varchar(255) NOT NULL,\
+  `birthYear` varchar(255) NOT NULL,\
+  `healthcare` varchar(255) NOT NULL,\
+  `employeeID` varchar(255) NOT NULL,\
+  `married` varchar(255) NOT NULL,\
+  `hireMonth` varchar(255) NOT NULL,\
+  `hireDay` varchar(255) NOT NULL,\
+  `hireYear` varchar(255) NOT NULL\
+)\
+\
+INSERT INTO `employeeprofile` (`firstName`, `lastName`, `addressStreet`, `addressCity`, `addressState`, `addressZip`, `birthMonth`, `birthDay`, `birthYear`, `healthcare`, `employeeID`, `married`, `hireMonth`, `hireDay`, `hireYear`) VALUES\
+('Natan', 'Abramov', '20 Beach lane', 'Staten Island', 'NY', '10312', '04', '20', '1994', '12345', '2457457912', 'no', '04', '20', '2018'),\
+('Konstantin', 'Savinov', '40 Stonegate Drive', 'Staten Island', 'NY', '10304', '09', '26', '1996', '12345', '7821234818', 'no', '04', '20', '2018'),\
+('Yuri', 'Yurchenko', '20 Birth Avenue', 'Staten Island', 'NY', '10312', '04', '20', '1993', '51268', '1252902567', 'no', '05', '22', '2017'),\
+('Mukhiddin', 'Nuriddinov', '15 Brighton Beach', 'Brooklyn', 'NY', '10300', '10', '30', '1996', '7325234', '7074124352', 'no', '10', '22', '2017'),\
+('Bill', 'Fenley', '386 Brighton', 'Brooklyn', 'NY', '10302', '11', '14', '1989', 'yes', '1268998421', 'no', '09', '25', '2008');\
+\
+\
+\
+\
+\
+\
+CREATE TABLE `financeprofile` (\
+  `employeeID` varchar(255) NOT NULL,\
+  `kParticipate` varchar(255) NOT NULL,\
+  `kContribution` varchar(255) NOT NULL,\
+  `pensionParticipate` varchar(255) NOT NULL,\
+  `pensionContribution` varchar(255) NOT NULL,\
+  `unionParticipate` varchar(255) NOT NULL,\
+  `payType` varchar(255) NOT NULL,\
+  `payAmount` varchar(255) NOT NULL\
+) \
+INSERT INTO `financeprofile` (`employeeID`, `kParticipate`, `kContribution`, `pensionParticipate`, `pensionContribution`, `unionParticipate`, `payType`, `payAmount`) VALUES\
+('2457457912', '2425', '1488', '1337', '228', '1000', '140000', '5656464'),\
+('7821234818', '12231', '61246', '125216', '22215', '562161', '14026', '566214'),\
+('1252902567', '214214', '215215', '124124', '2512', '5215', '632632', '123213'),\
+('7074124352', '543251', '436437', '512321', '8985', '521512', '5654745', '89859'),\
+('1268998421', 'yes', '1000', 'no', '0', 'no', 'salary', '50000');\
+\
+\
+\
+\
+\
+\
+\
+CREATE TABLE `insuranceprofile` (\
+  `employeeID` varchar(255) NOT NULL,\
+  `healthcareInsurance` varchar(255) NOT NULL,\
+  `dentalInsurance` varchar(255) NOT NULL,\
+  `opticalInsurance` varchar(255) NOT NULL,\
+  `healthTier` varchar(255) NOT NULL\
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;\
+\
+INSERT INTO `insuranceprofile` (`employeeID`, `healthcareInsurance`, `dentalInsurance`, `opticalInsurance`, `healthTier`) VALUES\
+('2457457912', 'Fedelex', 'Dental', 'Optic', 'idk'),\
+('1252902567', 'Kaiser', 'AARP', 'EyeBenefits', 'no'),\
+('7074124352', 'Humana', 'Cigna', 'Vsp', 'yes'),\
+('7821234818', 'Aetna', 'Metlife', 'Humana', 'no'),\
+('1268998421', 'Fedex', 'Dental', 'Optical', 'yes');\
+\
+\
+\
+\
+\
+\
+CREATE TABLE `login` (\
+  `username` varchar(255) NOT NULL,\
+  `password` varchar(255) NOT NULL\
+)\
+\
+INSERT INTO `login` (`username`, `password`) VALUES\
+('Konstantin', 'chelka'),\
+('Yuri', 'pyzo');}
