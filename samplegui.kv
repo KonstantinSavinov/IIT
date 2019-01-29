@@ -69,8 +69,10 @@ ScreenManagement:
         Button:
             on_release: root.check_attempt()
             text: "Login"
-            font_name: 'Arial'
+            font_name: 'Roboto-Bold'
             font_size: 28
+
+
 
 
 <MainMenu>:
@@ -80,6 +82,17 @@ ScreenManagement:
             pos: self.pos
             size: self.size
             source: 'background.png'
+    ActionBar:
+        pos_hint: {'top':1}
+        ActionView:
+            use_separator: True
+            ActionPrevious:
+                title: 'IIT - Human Resource Helper'
+                with_previous: False
+            ActionOverflow:
+            ActionButton:
+                icon: 'home.png'
+                on_release: app.root.current = "main"
     AnchorLayout:
         padding: 50, 50, 50, 50
         anchor_x: "center"
@@ -106,6 +119,7 @@ ScreenManagement:
 
                     Button:
                         size_hint: .2, 1
+                        font_name: 'Roboto-Bold'
                         font_size: 26
                         text: "Logout"
                         on_release: app.root.current = "log"
@@ -124,6 +138,7 @@ ScreenManagement:
                     Label:
                         size_hint: .2, 1
                         font_size: 26
+                        font_name: 'Roboto-Italic'
                         text: "Search:"
                         color: 0, 0, 0, 1
 
@@ -156,30 +171,33 @@ ScreenManagement:
                     Label:
                         text: "ID"
                         font_size: 20
+                        font_name: 'Roboto-Italic'
                         color: 0, 0, 0, 1
                         canvas.before:
                             Color:
-                                rgba: (1, 1, 1, 1)
+                                rgba: (184, 235, 243, 1)
                             Rectangle:
                                 pos: self.pos
                                 size: self.size
                     Label:
                         text: "Last Name"
                         font_size: 20
+                        font_name: 'Roboto-Italic'
                         color: 0, 0, 0, 1
                         canvas.before:
                             Color:
-                                rgba: (1, 1, 1, 1)
+                                rgba: (184, 235, 243, 1)
                             Rectangle:
                                 pos: self.pos
                                 size: self.size
                     Label:
                         text: "First Name"
                         font_size: 20
+                        font_name: 'Roboto-Italic'
                         color: 0, 0, 0, 1
                         canvas.before:
                             Color:
-                                rgba: (1, 1, 1, 1)
+                                rgba: (184, 235, 243, 1)
                             Rectangle:
                                 pos: self.pos
                                 size: self.size
@@ -210,8 +228,10 @@ ScreenManagement:
                 Button:
                     size_hint_y: .2
                     font_size: 26
+                    font_name: 'Roboto-Bold'
                     text: "Add Employee"
                     on_release: app.root.current = "addpage"
+                    disabled: False
                     background_normal: ''
                     background_color: 1, 1, 1, 1
                     color: 0, 0, 0, 1
@@ -229,9 +249,9 @@ ScreenManagement:
                     id: 'edit_id'
                     size_hint_y: .2
                     font_size: 26
+                    font_name: 'Roboto-Bold'
                     text: "Edit"
                     on_release: app.root.current = "edit"
-
                     disabled: True
                     background_normal: ''
                     background_color: 78, 79, 79, 1
@@ -241,9 +261,9 @@ ScreenManagement:
                     id: 'remove_id'
                     size_hint_y: .2
                     font_size: 26
+                    font_name: 'Roboto-Bold'
                     text: "Remove"
-                    on_release: app.root.current = "addpage"
-
+                    on_release: root.remove_users()
                     disabled: True
                     background_normal: ''
                     background_color: 78, 79, 79, 1
@@ -253,15 +273,13 @@ ScreenManagement:
                     id: 'payrol_id'
                     size_hint_y: .2
                     font_size: 26
+                    font_name: 'Roboto-Bold'
                     text: "Pay Roll"
                     on_release: app.root.current = "payroll"
-
                     disabled: True
                     background_normal: ''
                     background_color: 78, 79, 79, 1
                     color: 0, 0, 0, 1
-
-
 
 
 
@@ -272,6 +290,17 @@ ScreenManagement:
             pos: self.pos
             size: self.size
             source: 'background.png'
+    ActionBar:
+        pos_hint: {'top':1}
+        ActionView:
+            use_separator: True
+            ActionPrevious:
+                title: 'IIT - Human Resource Helper'
+                with_previous: False
+            ActionOverflow:
+            ActionButton:
+                icon: 'home.png'
+                on_release: app.root.current = "main"
 
     FloatLayout:
         BoxLayout:
@@ -510,10 +539,8 @@ ScreenManagement:
                     on_release: app.root.current = "main"
                     text: "Close"
                 Button:
-                    on_release: root.execute()
+                    on_release: app.root.current = "employeecheck"
                     text: "Calculating a check"
-
-
 
 
 
@@ -524,14 +551,61 @@ ScreenManagement:
             pos: self.pos
             size: self.size
             source: 'background.png'
+    ActionBar:
+        pos_hint: {'top':1}
+        ActionView:
+            use_separator: True
+            ActionPrevious:
+                title: 'IIT - Human Resource Helper'
+                with_previous: False
+            ActionOverflow:
+            ActionButton:
+                icon: 'home.png'
+                on_release: app.root.current = "main"
+
 
     FloatLayout:
         BoxLayout:
-            orientation: "vertical"
-            pos_hint: {'center': (.55, .5)}
+            pos_hint: {'center': (.5, .5)}
+            padding: 55, 55, 55, 10
+            spacing: 50
+            size_hint: 1, 1
             BoxLayout:
-                size_hint: 0.9, 0.85
-                padding: 50, 50, 50, 50
+                canvas:
+                    Color:
+                        rgba: .85, .87, .87, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+        BoxLayout:
+            orientation: "vertical"
+            pos_hint: {'center': (.55, .50)}
+            size_hint: 1, 0.95
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint: .8,.02
+                pos_hint:{"x": .04, "bottom": 0}
+                spacing: 150
+
+                Label:
+                    text: "Personal Info:"
+                    font_name: 'Roboto-Bold'
+                    font_size: 30
+                    color: 0,0,0,1
+                Label:
+                    text: "Financial Info:"
+                    font_name: 'Roboto-Bold'
+                    font_size: 30
+                    color: 0,0,0,1
+                Label:
+                    text: "Health Insurance Info:"
+                    font_name: 'Roboto-Bold'
+                    font_size: 30
+                    color: 0,0,0,1
+            BoxLayout:
+                size_hint: 0.9, 0.1
+                padding: 10, 10, 10, 10
                 spacing: 50
                 BoxLayout:
                     orientation: "horizontal"
@@ -542,6 +616,7 @@ ScreenManagement:
                         Rectangle:
                             pos: self.pos
                             size: self.size
+
                     BoxLayout:
                         orientation: "vertical"
                         spacing: 2
@@ -777,20 +852,18 @@ ScreenManagement:
 
             BoxLayout:
                 orientation: "horizontal"
-                padding: 10
                 spacing: 10
-                size_hint: 0.3, 0.1
-                pos_hint: {"x": 0.3}
+                size_hint: 0.4, 0.02
+                pos_hint: {"x": 0.25, "y": 1}
                 Button:
+                    size_hint: 0.8, 0.5
                     text: "Save Changes"
                     on_release:
                         (root.package_changes(employeeid.text,address.text, addresscity.text, addressstate.text, addresszip.text, mob.text, dob.text, yob.text, healthCare.text, married.text, hireMonth.text, hireDay.text, hireYear.text, kParticipate.text, kContribution.text, pensionP.text, pensionC.text, unionP.text, payType.text, payAmount.text,healthcareIns.text, dentalIns.text, opticalIns.text, healthTier.text), root.on_click())
                 Button:
+                    size_hint: 0.8, 0.5
                     text: "Back"
                     on_release: app.root.current = "main"
-
-
-
 
 
 
@@ -803,6 +876,7 @@ ScreenManagement:
             size: self.size
 
 
+
 <EmployeeCheck>:
     name: "employeecheck"
     canvas:
@@ -810,6 +884,18 @@ ScreenManagement:
             pos: self.pos
             size: self.size
             source: 'background.png'
+
+    ActionBar:
+        pos_hint: {'top':1}
+        ActionView:
+            use_separator: True
+            ActionPrevious:
+                title: 'IIT - Human Resource Helper'
+                with_previous: False
+            ActionOverflow:
+            ActionButton:
+                icon: 'home.png'
+                on_release: app.root.current = "main"
 
     BoxLayout:
         orientation: "vertical"
@@ -820,66 +906,68 @@ ScreenManagement:
                 pos: self.pos
                 size: self.size
                 source: 'check.png'
-        FloatLayout:
-            BoxLayout:
-                orientation: "horizontal"
-                padding: 2
-                size_hint: 0.3, 0.87
-                pos_hint: {"center": (0.15, 0.5), "top": 0.30}
-                Label:
-                    text: root.finance_info[7]
-                    color: 0,0,0,1
-                Label:
-                    text: root.finance_info[6]
-                    color: 0,0,0,1
 
-        FloatLayout:
-            BoxLayout:
-                orientation: "horizontal"
-                spacing: 30
-                size_hint: 0.45, 0.87
-                pos_hint: {"x": 0.33, "y": 0.43}
-                Label:
-                    text: root.finance_info[5]
-                    color: 0,0,0,1
+    BoxLayout:
+        orientation: "horizontal"
+        size_hint: 0.25, 0.9
+        pos_hint: {"x": 0.13, "y": 0.27}
+        Label:
+            text: root.data_list[0]
+            font_name: 'Roboto-Bold'
+            color: 0,0,0,1
+        Label:
+            text: root.data_list[1]
+            font_name: 'Roboto-Bold'
+            color: 0,0,0,1
 
-        FloatLayout:
-            BoxLayout:
-                orientation: "vertical"
-                size_hint: 0.45, 0.87
-                pos_hint: {"x": 0.2, "y": 0.65}
-                Label:
-                    text: root.finance_info[8]
-                    color: 0,0,0,1
+    BoxLayout:
+        orientation: "horizontal"
+        size_hint: 0.45, 0.9
+        pos_hint: {"x": 0.35, "y": 0.27}
+        Label:
+            text: root.data_list[10]
+            font_name: 'Roboto-Bold'
+            color: 0,0,0,1
 
-        FloatLayout:
-            BoxLayout:
-                orientation: "vertical"
-                spacing: 35
-                size_hint: 0.45, 0.87
-                pos_hint: {"x": 0.7, "y": 0.85}
-                Label:
-                    text: root.finance_info[0]
-                    color: 0,0,0,1
-                Label:
-                    text: root.finance_info[1]
-                    color: 0,0,0,1
-                Label:
-                    text: root.finance_info[2]
-                    color: 0,0,0,1
-                Label:
-                    text: root.finance_info[3]
-                    color: 0,0,0,1
+    BoxLayout:
+        orientation: "horizontal"
+        size_hint: 0.45, 0.9
+        pos_hint: {"x": 0.25, "y": 0.2}
+        Label:
+            text: "$" + root.data_list[22]
+            font_name: 'Roboto-Bold'
+            color: 0,0,0,1
 
-        FloatLayout:
-            BoxLayout:
-                orientation: "horizontal"
-                padding: 20
-                size_hint: 0.45, 0.87
-                pos_hint: {"x": 0.7, "center": (0.92, 0.3)}
-                Label:
-                    text: root.finance_info[4]
-                    color: 0,0,0,1
+
+    BoxLayout:
+        orientation: "vertical"
+        size_hint: 0.45, 0.2
+        pos_hint: {"x": 0.65, "y": 0.47}
+        Label:
+            text: "$" + root.finance_info[0]
+            font_name: 'Roboto-Bold'
+            color: 0,0,0,1
+        Label:
+            text: "$" + root.finance_info[1]
+            font_name: 'Roboto-Bold'
+            color: 0,0,0,1
+        Label:
+            text: "$" + root.finance_info[2]
+            font_name: 'Roboto-Bold'
+            color: 0,0,0,1
+        Label:
+            text: "$" + root.finance_info[3]
+            font_name: 'Roboto-Bold'
+            color: 0,0,0,1
+
+    BoxLayout:
+        orientation: "horizontal"
+        size_hint: 0.45, 0.1
+        pos_hint: {"x": 0.65, "y": 0.29}
+        Label:
+            text: "$" + root.finance_info[4]
+            font_name: 'Roboto-Bold'
+            color: 0,0,0,1
 
     BoxLayout:
         orientation: "horizontal"
@@ -902,101 +990,255 @@ ScreenManagement:
             pos: self.pos
             size: self.size
             source: 'background.png'
-    BoxLayout:
-        orientation: "vertical"
-        size_hint: 0.25, .25
-        pos_hint: {"x": 0.75, "y": 0.4}
-        spacing: 100
+    ActionBar:
+        pos_hint: {'top':1}
+        ActionView:
+            use_separator: True
+            ActionPrevious:
+                title: 'IIT - Human Resource Helper'
+                with_previous: False
+            ActionOverflow:
+            ActionButton:
+                icon: 'home.png'
+                on_release: app.root.current = "main"
 
-        Button:
-            id: "sub"
-            font_size: 26
-            text: "Submit"
+    FloatLayout:
+        BoxLayout:
+            pos_hint: {'center': (.5, .5)}
+            padding: 55, 55, 55, 55
+            spacing: 50
+            BoxLayout:
+                canvas:
+                    Color:
+                        rgba: .85, .87, .87, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+        BoxLayout:
+            orientation: "vertical"
+            size_hint: .75 , .7
+            pos_hint: {'center': (.45, .55)}
+            spacing: 15
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint: 1,.2
+                pos_hint:{"x": .05}
+                padding: 2
+                spacing: 5
 
-        Button:
-            id: "mainm"
-            font_size: 26
-            text: "Back"
-            on_release: app.root.current = "main"
+                Label:
+                    text: "Personal Info:"
+                    font_name: 'Roboto-Bold'
+                    font_size: 30
+                    color: 0,0,0,1
+                Label:
+                    text: "Financial Info:"
+                    font_name: 'Roboto-Bold'
+                    font_size: 30
+                    color: 0,0,0,1
+                Label:
+                    text: "Health Insurance Info:"
+                    font_name: 'Roboto-Bold'
+                    font_size: 30
+                    color: 0,0,0,1
 
-    BoxLayout:
-        orientation: "vertical"
-        size_hint: .5, 1
-        pos_hint:{"x": 0.25,"y": 0}
-        TextInput:
-            id: fn
-            write_tab: False
-            multiline: False
-            on_text_validate: root.foo()
-            hint_text: "First Name"
-            font_size: 20
-        TextInput:
-            id: ln
-            write_tab: False
-            multiline: False
-            on_text_validate: root.foo()
-            hint_text: "Last Name"
-            font_size: 20
-        TextInput:
-            id: streetadd
-            write_tab: False
-            multiline: False
-            on_text_validate: root.foo()
-            hint_text: "Street Address"
-            font_size: 20
-        TextInput:
-            id: cityadd
-            write_tab: False
-            multiline: False
-            on_text_validate: root.foo()
-            hint_text: "City"
-            font_size: 20
-        TextInput:
-            id: stateadd
-            write_tab: False
-            multiline: False
-            on_text_validate: root.foo()
-            hint_text: "State"
-            font_size: 20
-        TextInput:
-            id: zipadd
-            write_tab: False
-            multiline: False
-            on_text_validate: root.foo()
-            hint_text: "Zip Code"
-            font_size: 20
-        TextInput:
-            id: bm
-            write_tab: False
-            multiline: False
-            on_text_validate: root.foo()
-            hint_text: "MM"
-            font_size: 20
-        TextInput:
-            id: bd
-            write_tab: False
-            multiline: False
-            on_text_validate: root.foo()
-            hint_text: "DD"
-            font_size: 20
-        TextInput:
-            id: by
-            write_tab: False
-            multiline: False
-            on_text_validate: root.foo()
-            hint_text: "YYYY"
-            font_size: 20
-        TextInput:
-            id: healthc
-            write_tab: False
-            multiline: False
-            on_text_validate: root.foo()
-            hint_text: "HealthCare"
-            font_size: 20
-        TextInput:
-            id: marry
-            write_tab: False
-            multiline: False
-            on_text_validate: root.foo()
-            hint_text: "Married Y/N"
-            font_size: 20
+
+            BoxLayout:
+                orientation: "vertical"
+                BoxLayout:
+                    orientation: "horizontal"
+
+                    pos_hint: { "x": 0.05, "y":.2}
+                    BoxLayout:
+                        orientation: "vertical"
+                        padding: 20
+                        spacing: 8
+                        TextInput:
+                            id: firstname
+                            write_tab: False
+                            multiline: False
+                            hint_text: "First Name"
+                            font_size: 20
+                        TextInput:
+                            id: lastname
+                            write_tab: False
+                            multiline: False
+                            hint_text: "Last Name"
+                            font_size: 20
+                        TextInput:
+                            id: address
+                            write_tab: False
+                            multiline: False
+                            hint_text: "Street Address"
+                            font_size: 20
+                        TextInput:
+                            id: addresscity
+                            write_tab: False
+                            multiline: False
+                            hint_text: "City"
+                            font_size: 20
+                        TextInput:
+                            id: addressstate
+                            write_tab: False
+                            multiline: False
+                            hint_text: "State"
+                            font_size: 20
+                        TextInput:
+                            id: addresszip
+                            write_tab: False
+                            multiline: False
+                            hint_text: "Zip Code"
+                            font_size: 20
+                        BoxLayout:
+                            orientation: "horizontal"
+                            TextInput:
+                                id: mob
+                                input_filter: lambda text, from_undo: text.isnumeric() and text[:2 - len(self.text)]
+                                write_tab: False
+                                multiline: False
+                                hint_text: "Birth MM"
+                                font_size: 20
+                            TextInput:
+                                id: dob
+                                input_filter: lambda text, from_undo: text.isnumeric() and text[:2 - len(self.text)]
+                                write_tab: False
+                                multiline: False
+                                hint_text: "Birth DD"
+                                font_size: 20
+                            TextInput:
+                                id: yob
+                                input_filter: lambda text, from_undo: text.isnumeric() and text[:4 - len(self.text)]
+                                write_tab: False
+                                multiline: False
+                                hint_text: "Birth YYYY"
+                                font_size: 20
+                        TextInput:
+                            id: healthCare
+                            write_tab: False
+                            multiline: False
+                            hint_text: "HealthCare"
+                            font_size: 20
+                        Spinner:
+                            id: married
+                            text: '<Marital Status>'
+                            values: ['Married', 'Single']
+                            on_text: root.on_choice1(self.text)
+
+
+                        BoxLayout:
+                            orientation: "horizontal"
+                            TextInput:
+                                id: hireMonth
+                                input_filter: lambda text, from_undo: text.isnumeric() and text[:2 - len(self.text)]
+                                write_tab: False
+                                multiline: False
+                                hint_text: "Hired MM"
+                                font_size: 20
+                            TextInput:
+                                id: hireDay
+                                input_filter: lambda text, from_undo: text.isnumeric() and text[:2 - len(self.text)]
+                                write_tab: False
+                                multiline: False
+                                hint_text: "Hired DD"
+                                font_size: 20
+                            TextInput:
+                                id: hireYear
+                                input_filter: lambda text, from_undo: text.isnumeric() and text[:4 - len(self.text)]
+                                write_tab: False
+                                multiline: False
+                                hint_text: "Hired YYYY"
+                                font_size: 20
+
+
+                    BoxLayout:
+                        orientation: "vertical"
+                        padding: 20
+                        spacing: 20
+                        Spinner:
+                            id: kParticipate
+                            text: '<kParticipation>'
+                            values: ['Yes', 'No']
+                            on_text: root.on_choice2(self.text)
+                        TextInput:
+                            id: kContribution
+                            write_tab: False
+                            multiline: False
+                            hint_text: "kContribution"
+                            font_size: 20
+                        Spinner:
+                            id: pensionP
+                            text: '<Pension Participation>'
+                            values: ['Yes', 'No']
+                            on_text: root.on_choice3(self.text)
+                        TextInput:
+                            id: pensionC
+                            write_tab: False
+                            multiline: False
+                            hint_text: "Penstion Contribution"
+                            font_size: 20
+                        Spinner:
+                            id: unionP
+                            text: '<Union Participation>'
+                            values: ['Yes', 'No']
+                            on_text: root.on_choice4(self.text)
+                        Spinner:
+                            id: payType
+                            text: '<Pay Type>'
+                            values: ['Wage', 'Salary']
+                            on_text: root.on_choice5(self.text)
+                        TextInput:
+                            id: payAmount
+                            write_tab: False
+                            multiline: False
+                            hint_text: "Payment"
+                            font_size: 20
+                    BoxLayout:
+                        orientation: "vertical"
+                        padding: 20
+                        spacing: 50
+                        TextInput:
+                            id: healthcareIns
+                            write_tab: False
+                            multiline: False
+                            hint_text: "HealthCare Insurance"
+                            font_size: 20
+                        TextInput:
+                            id: dentalIns
+                            write_tab: False
+                            multiline: False
+                            hint_text: "Dental Insurance"
+                            font_size: 20
+                        TextInput:
+                            id: opticalIns
+                            write_tab: False
+                            multiline: False
+                            hint_text: "Optical Insurance"
+                            font_size: 20
+                        Spinner:
+                            id: healthTier
+                            text: '<Health Tier>'
+                            values: ['1', '2', '3', '4']
+                            on_text: root.on_choice6(self.text)
+        FloatLayout:
+            size_hint: .92, .14
+            pos_hint: {'center': (.5, .13)}
+            canvas:
+                Color:
+                    rgba: .70, .70, .70, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            BoxLayout:
+                size_hint: 0.7, .5
+                pos_hint: {'center': (.5, .5)}
+                orientation: "horizontal"
+                spacing: 25
+
+                Button:
+                    text: "Submit"
+                    on_release: root.on_click()
+
+
+                Button:
+                    text: "Back"
+                    on_release: app.root.current = "main"

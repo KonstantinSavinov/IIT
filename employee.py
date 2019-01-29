@@ -11,25 +11,31 @@ class Employee:
     __pass = ""
     __first_name = ""
     __last_name = ""
-    __age = ""
-    __address = ""
+    __addressStreet= ""
+    __addressCity = ""
+    __addressState =""
+    __addressZip = ""
     __day_of_birth = ""
     __month_of_birth = ""
     __year_of_birth = ""
     __health_care = ""
-    __health_care_id = ""
     __employee_id = ""
     __married = ""
+    __hireDay =""
+    __hireMonth=""
+    __hireYear=""
+    __kParticipation=""
+    __kContribution = ""
+    __pension = ""
+    __pensionCon =""
+    __union = ""
+    __payType=""
+    __payAmount = ""
     __hInsurance = ""
     __dInsurance = ""
     __oInsurance = ""
     __hTier = ""
-    __401k = ""
-    __kContribution = ""
-    __pension = ""
-    __unionDues = ""
-    __payType = ""
-    __payAmount = ""
+
     __row = ""
     __status = ""
 
@@ -41,12 +47,21 @@ class Employee:
 
     cursorObject = connection.cursor()
 
-    def find(self, cursorObject=cursorObject):
+    def find(self):
         result = []
         result2 = []
         result3 = []
 
         try:
+
+            connection: Connection = pymysql.connect(host='localhost',
+                                                     port=8889,
+                                                     user='root',
+                                                     password='root',
+                                                     db='hrdb')
+
+            cursorObject = connection.cursor()
+
             cursorObject.execute(
                 'SELECT * FROM `employeeprofile` WHERE employeeID ="' + self.__employee_id + '"' + ' AND firstName ="' + self.__first_name + '"' +
                 ' AND lastName ="' + self.__last_name + '"')
@@ -110,33 +125,33 @@ class Employee:
             searchstatus = True
 
         if (searchstatus == False):
-            try:
+
                 with connection.cursor() as cursor:
                     # Create a new record
-                    sql = "INSERT INTO `employeeprofile` (`employeeID`, `firstName`, `lastName`, `address`,`birthDay`," \
-                          "`birthMonth`,`birthYear`,`healthcare`,`healthcareID`) " \
-                          'VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)'
-                    sql1 = "INSERT INTO `insuranceprofile` (`employeeID`, `firstName`, `lastName`, `healthcareID`,`married`,`healthcareInsurance`," \
-                           "`dentalInsurance`,`oInsurance`,`healthTier`) " \
-                           'VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)'
-                    sql2 = "INSERT INTO `financeprofile` (`employeeID`, `firstName`, `lastName`,`401k`,`kContribution`," \
-                           "`pension`,`unionDues`,`payType`,`payAmount`) " \
-                           'VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)'
+                    sql = "INSERT INTO `employeeprofile` (`firstName`, `lastName`, `addressStreet`,`addressCity`,`addressState`,`addressZip`,`birthMonth`," \
+                          "`birthDay`,`birthYear`,`healthcare`,`employeeID`,`married`,`hireMonth`,`hireDay`,`hireYear`)" \
+                          'VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
+                    sql1 = "INSERT INTO `insuranceprofile` (`employeeID`,`healthcareInsurance`," \
+                           "`dentalInsurance`,`opticalInsurance`,`healthTier`)" \
+                           'VALUES (%s, %s, %s, %s, %s)'
+                    sql2 = "INSERT INTO `financeprofile` (`employeeID`,`kParticipate`,`kContribution`," \
+                           "`pensionParticipate`,`pensionContribution`,`unionParticipate`,`payType`,`payAmount`)" \
+                           'VALUES (%s, %s, %s, %s, %s, %s, %s, %s)'
                     cursor.execute(sql,
                                    (
-                                    self.__employee_id, self.__first_name, self.__last_name, self.__address,
-                                    self.__day_of_birth, self.__month_of_birth, \
-                                    self.__year_of_birth, self.__health_care, self.__health_care_id))
-                    cursor.execute(sql1,
-                                   (self.__employee_id, self.__first_name, self.__last_name, self.__health_care_id, self.__married,
-                                    self.__hInsurance, self.__dInsurance, \
-                                    self.__oInsurance, self.__hTier))
+                                    self.__first_name, self.__last_name, self.__addressStreet,self.__addressCity,self.__addressState, \
+                                    self.__addressZip,self.__month_of_birth,self.__day_of_birth,  \
+                                    self.__year_of_birth, self.__health_care, self.__employee_id, self.__married, self.__hireMonth, \
+                                    self.__hireDay, self.__hireYear)
+                                   )
                     cursor.execute(sql2,
-                                   (self.__employee_id, self.__first_name, self.__last_name, self.__401k,
-                                    self.__kContribution, self.__pension, \
-                                    self.__unionDues, self.__payType, self.__payAmount))
+                                   (self.__employee_id, self.__kParticipation, self.__kContribution, self.__pension, self.__pensionCon, \
+                                    self.__union, self.__payType, self.__payAmount))
+                    cursor.execute(sql1,
+                                   (self.__employee_id, self.__health_care, self.__dInsurance, self.__oInsurance, \
+                                    self.__hTier))
                 connection.commit()
-            finally:
+
                 print("Successfully inserted")
                 return 1
         else:
@@ -160,8 +175,17 @@ class Employee:
     def get_last_name(self):
         return self.__last_name
 
-    def get_address(self):
-        return self.__address
+    def get_address_street(self):
+        return self.__addressStreet
+
+    def get_address_city(self):
+        return self.__addressCity
+
+    def get_address_State(self):
+        return self.__addressState
+
+    def get_address_Zip(self):
+        return self.__addressZip
 
     def get_day_of_birth(self):
         return self.__day_of_birth
@@ -175,8 +199,6 @@ class Employee:
     def get_health_care(self):
         return self.__health_care
 
-    def get_health_care_id(self):
-        return self.__health_care_id
 
     def get_employee_id(self):
         return self.__employee_id
@@ -196,8 +218,8 @@ class Employee:
     def get_hTier(self):
         return self.__hTier
 
-    def get_401k(self):
-        return self.__401k
+    def get_kParticipation(self):
+        return self.__kContribution
 
     def get_kContribution(self):
         return self.__kContribution
@@ -205,8 +227,11 @@ class Employee:
     def get_pension(self):
         return self.__pension
 
-    def get_union_dues(self):
-        return self.__unionDues
+    def get_pension_con(self):
+        return self.__pensionCon
+
+    def get_union(self):
+        return self.__union
 
     def get_pay_type(self):
         return self.__payType
@@ -216,6 +241,16 @@ class Employee:
 
     def get_row(self):
         return self.__row
+
+    def get_hireDay(self):
+        return self.__hireDay
+
+    def get_hireMonth(self):
+        return self.__hireMonth
+
+    def get_hireYear(self):
+        return self.__hireYear
+
     # Setters
 
     def set_status(self, stat):
@@ -233,8 +268,14 @@ class Employee:
     def set_last_name(self, lastName):
         self.__last_name = lastName
 
-    def set_address(self, addRess):
-        self.__address = addRess
+    def set_address_street(self, addRess):
+        self.__addressStreet = addRess
+    def set_address_city(self, addRess):
+        self.__addressCity = addRess
+    def set_address_state(self, addRess):
+        self.__addressState = addRess
+    def set_address_zip(self, addRess):
+        self.__addressZip = addRess
 
     def set_day_of_birth(self, birthDay):
         self.__day_of_birth = birthDay
@@ -248,8 +289,6 @@ class Employee:
     def set_health_care(self, healthCare):
         self.__health_care = healthCare
 
-    def set_health_care_id(self, healthCareId):
-        self.__health_care_id = healthCareId
 
     def set_employee_id(self, employeeId):
         self.__employee_id = employeeId
@@ -269,8 +308,8 @@ class Employee:
     def set_hTier(self, hTier):
         self.__hTier = hTier
 
-    def set_401k(self, form401k):
-        self.__401k = form401k
+    def set_kParticipation(self, kPar):
+        self.__kParticipation = kPar
 
     def set_kContribution(self, kContribution):
         self.__kContribution = kContribution
@@ -278,8 +317,11 @@ class Employee:
     def set_pension(self, pension):
         self.__pension = pension
 
-    def set_union_dues(self, unionDues):
-        self.__unionDues = unionDues
+    def set_pensionCon(self, pension):
+        self.__pensionCon = pension
+
+    def set_union(self, unionDues):
+        self.__union = unionDues
 
     def set_pay_type(self, payType):
         self.__payType = payType
@@ -289,6 +331,13 @@ class Employee:
 
     def set_row(self, row):
         self.__row = row
+
+    def set_hired(self, day):
+        self.__hireDay = day
+    def set_hirem(self, m):
+        self.__hireMonth = m
+    def set_hirey(self, y):
+        self.__hireYear = y
 
 
 class Login(Employee):
@@ -321,7 +370,7 @@ class Login(Employee):
 
 
 class Register(Employee):
-    def __init__(self, firstName, lastName, address, dayofbirth, monthofbirth, yearofbirth, healthcare, healthcareid, married, hInsur, dInsur, oInsur, hTie, f01k, kCon, pens, union, payt, paa):
+    def __init__(self, firstName, lastName, addressStr, addressC, addressStt, addressZip, dayofbirth, monthofbirth, yearofbirth, healthcare, married, hInsur, dInsur, oInsur, hTie, kCon,kPar, pens,penCon, union, payt, paa,d,m,y):
 
 
         temp_id = self.generateID()
@@ -330,25 +379,31 @@ class Register(Employee):
         self.set_employee_id(str(temp_id)[:10])
         self.set_first_name(firstName)
         self.set_last_name(lastName)
-        self.set_address(address)
+        self.set_address_street(addressStr)
+        self.set_address_city(addressC)
+        self.set_address_state(addressStt)
+        self.set_address_zip(addressZip)
         self.set_day_of_birth(dayofbirth)
         self.set_month_of_birth(monthofbirth)
         self.set_year_of_birth(yearofbirth)
         self.set_health_care(healthcare)
-        self.set_health_care_id(healthcareid)
-
         self.set_married(married)
         self.set_hInsurance(hInsur)
         self.set_dInsurance(dInsur)
         self.set_oInsurance(oInsur)
         self.set_hTier(hTie)
 
-        self.set_401k(f01k)
         self.set_kContribution(kCon)
+        self.set_kParticipation(kPar)
         self.set_pension(pens)
-        self.set_union_dues(union)
+        self.set_pensionCon(penCon)
+        self.set_union(union)
         self.set_pay_type(payt)
         self.set_pay_amount(paa)
+
+        self.set_hired(d)
+        self.set_hirem(m)
+        self.set_hirey(y)
 
     def generateID(self):
         return uuid.uuid4().fields[-1]

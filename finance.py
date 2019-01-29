@@ -228,5 +228,3 @@ def get_social_security_deduction(employee_salary):
 def total_salary_deduction(employee_salary, employee_marriage_status, employee_state):
     final_employee_salary = employee_salary - float(get_medicare_deduction(employee_salary)) - float(get_federal_income_tax_deduction(employee_salary, employee_marriage_status)) - float(get_state_income_tax_deduction(employee_state, employee_salary)) - float(get_social_security_deduction(employee_salary))
     return str(final_employee_salary)
-
-
